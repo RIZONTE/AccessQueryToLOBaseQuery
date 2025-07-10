@@ -4,19 +4,23 @@ import access_queries
 
 import os
 
+import os
+
+# Получаем абсолютный путь к каталогу со скриптом
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 # Конфигурация
-# Надо поменять на свои значения !!!
-access_db_path = r"C:\Users\danch\Desktop\Практика_07-2025\Сверка — копия.accdb"                # путь до файла access
-meta_output_file = r"C:\Users\danch\Desktop\Практика_07-2025\access_meta.txt"                   # путь до выходного файла с метаданными таблиц
-queries_out_file = r"C:\Users\danch\Desktop\Практика_07-2025\queries.txt"                       # путь до выходного файла с запросами
-csv_files_path = r"C:\Users\danch\Desktop\Практика_07-2025"                                     # каталог куда сохраняются csv
+access_db_path = os.path.join(script_dir, r"input\Сверка — копия.accdb")                 # путь до файла access
+meta_output_file = os.path.join(script_dir, r"output\access_meta.txt")                   # путь до выходного файла с метаданными таблиц
+queries_out_file = os.path.join(script_dir, r"output\queries.txt")                       # путь до выходного файла с запросами
+csv_files_path = os.path.join(script_dir, r"output\\")                                   # каталог куда сохраняются csv
 
 excel_files = [
-    "C:/Users/danch/Desktop/Практика_07-2025/job1/604 со 124/0503124 — копия.xls",              # список excel-файлов
-    "C:/Users/danch/Desktop/Практика_07-2025/job1/604 со 124/0506604 — копия.xls",
+    os.path.join(script_dir, r"input\0503124 — копия.xls"),                              # список excel-файлов
+    os.path.join(script_dir, r"input\0506604 — копия.xls"),
 ]
 sheet_names = [
-    '2',                                                                                        # список листов которые импортируются
+    '2',                                                       # список листов которые импортируются
     'Лист1'
 ]
 

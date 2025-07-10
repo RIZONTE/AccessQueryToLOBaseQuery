@@ -60,26 +60,33 @@ def clean_numeric_columns(csv_file, columns, data_types):
         return False
 
 def main():
-    # Конфигурация (можно заменить на аргументы командной строки)
-    excel_file = "C:/Users/danch/Desktop/Практика_07-2025/job1/604 со 124/0503124 — копия.xls"      # Путь к исходному Excel файлу
-    sheet_name = '2'                                                                                # Имя листа для обработки
+    # Конфигурация
     schema_file = "C:/Users/danch/Desktop/Практика_07-2025/access_meta.txt"                         # Файл с описанием структуры
-    output_csv = 'C:/Users/danch/Desktop/Практика_07-2025/output124.csv'                            # Выходной CSV файл
+    csv_files_path = r"C:\Users\danch\Desktop\Практика_07-2025"                                     # Выходной CSV файл
     
-    # 1. Конвертируем Excel в CSV
-    if not process_excel_to_csv(excel_file, sheet_name, output_csv):
-        return
-    
-    # 2. Читаем файл схемы
-    table_name, columns, data_types = parse_schema_file(schema_file)
-    if not table_name:
-        return
-    
-    print(f"Обрабатывается таблица: {table_name}")
-    print(f"Столбцы: {columns}")
-    print(f"Типы данных: {data_types}")
-    # 3. Очищаем числовые столбцы
-    clean_numeric_columns(output_csv, columns, data_types)
+    excel_files = [
+        "C:/Users/danch/Desktop/Практика_07-2025/job1/604 со 124/0503124 — копия.xls",              # список excel-файлов
+        "C:/Users/danch/Desktop/Практика_07-2025/job1/604 со 124/0506604 — копия.xls",
+    ]
+    sheet_names = [
+        '2',                                                                                        # список листов которые импортируются
+        'Лист1'
+    ]
+
+
+    # Формирование csv файлов для импорта в LO Base
+    table_names, columns, data_types = parse_schema_file(schema_file)
+
+    for i in range(len(excel_files)):
+        csv_output = csv_files_path +"/" + table_names[i] + ".csv"
+        if not process_excel_to_csv(excel_files[i], sheet_names[i], csv_output):
+            print("Ошибка формирования csv")
+
+        print(f"Обрабатывается таблица: {table_names[i]}")
+        print(f"Столбцы: {columns[i]}")
+        print(f"Типы данных: {data_types[i]}")
+
+        clean_numeric_columns(csv_output, columns[i], data_types[i])
 
 if __name__ == "__main__":
     main()
