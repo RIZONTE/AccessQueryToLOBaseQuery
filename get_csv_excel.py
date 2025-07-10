@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import os
 
 def process_excel_to_csv(excel_file, sheet_name, output_csv):
     """Читает указанный лист из Excel файла и сохраняет в CSV"""
@@ -61,12 +62,15 @@ def clean_numeric_columns(csv_file, columns, data_types):
 
 def main():
     # Конфигурация
-    schema_file = "C:/Users/danch/Desktop/Практика_07-2025/access_meta.txt"                         # Файл с описанием структуры
-    csv_files_path = r"C:\Users\danch\Desktop\Практика_07-2025"                                     # Выходной CSV файл
+    # Получаем абсолютный путь к каталогу со скриптом
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    schema_file = os.path.join(script_dir, r"output\access_meta.txt")                               # Файл с описанием структуры
+    csv_files_path = os.path.join(script_dir, r"output\\")                                          # Выходной CSV файл
     
     excel_files = [
-        "C:/Users/danch/Desktop/Практика_07-2025/job1/604 со 124/0503124 — копия.xls",              # список excel-файлов
-        "C:/Users/danch/Desktop/Практика_07-2025/job1/604 со 124/0506604 — копия.xls",
+        os.path.join(script_dir, r"input\0503124 — копия.xls"),                                     # список excel-файлов
+        os.path.join(script_dir, r"input\0506604 — копия.xls"),
     ]
     sheet_names = [
         '2',                                                                                        # список листов которые импортируются
