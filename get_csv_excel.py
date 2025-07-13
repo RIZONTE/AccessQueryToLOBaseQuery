@@ -5,7 +5,7 @@ import os
 def process_excel_to_csv(excel_file, sheet_name, output_csv):
     """Читает указанный лист из Excel файла и сохраняет в CSV"""
     try:
-        df = pd.read_excel(excel_file, sheet_name=sheet_name)
+        df = pd.read_excel(excel_file, sheet_name=sheet_name, dtype=str)
         df.to_csv(output_csv, index=False, encoding='utf-8')
         print(f"Файл CSV успешно создан: {output_csv}")
         return True
@@ -35,8 +35,10 @@ def parse_schema_file(schema_file):
 def clean_numeric_columns(csv_file, columns, data_types):
     """Очищает числовые столбцы в CSV файле"""
     try:
-        df = pd.read_csv(csv_file, index_col=None)
-        df.columns = columns[0:-1]
+        df = pd.read_csv(csv_file, index_col=None, dtype=str)
+        df[" "] = "empty"
+        df.columns = columns
+        #print(df['F4'])
 
         # Создаем словарь {column: type} только для числовых столбцов
         numeric_cols = {
@@ -54,6 +56,14 @@ def clean_numeric_columns(csv_file, columns, data_types):
         
         # Сохраняем обратно в тот же файл
         df.to_csv(csv_file, index=False, encoding='utf-8')
+
+        content = ''
+        with open(csv_file, 'r', encoding='utf-8') as f_in:
+            content = f_in.read()
+
+        with open(csv_file, 'w', encoding='cp1251') as f_out:
+                f_out.write(content)
+
         print(f"Числовые столбцы очищены в файле: {csv_file}")
         return True
     except Exception as e:
