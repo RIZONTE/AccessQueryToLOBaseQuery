@@ -10,12 +10,14 @@ def main():
     # Получаем абсолютный путь к каталогу со скриптом
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    schema_file = os.path.join(script_dir, r"output\access_meta.txt")                               # Файл с описанием структуры
-    csv_files_path = os.path.join(script_dir, r"output\\")                                          # Выходной CSV файл
+    inputFiles = os.path.join(script_dir, r"input")
+    outFiles = os.path.join(script_dir, r"output")
+
+    schema_file = os.path.join(outFiles, r"access_meta.txt")                               # Файл с описанием структуры
     
     excel_files = [
-        os.path.join(script_dir, r"input\0503124 — копия.xls"),                                     # список excel-файлов
-        os.path.join(script_dir, r"input\0506604 — копия.xls"),
+        os.path.join(inputFiles, r"0503124 — копия.xls"),                                     # список excel-файлов
+        os.path.join(inputFiles, r"0506604 — копия.xls"),
     ]
     sheet_names = [
         '2',                                                                                        # список листов которые импортируются
@@ -27,7 +29,7 @@ def main():
     table_names, columns, data_types = parse_schema_file(schema_file)
 
     for i in range(len(excel_files)):
-        csv_output = csv_files_path +"/" + table_names[i] + ".csv"
+        csv_output = os.path.join(outFiles, table_names[i] + ".csv")
         if not process_excel_to_csv(excel_files[i], sheet_names[i], csv_output):
             print("Ошибка формирования csv")
 
