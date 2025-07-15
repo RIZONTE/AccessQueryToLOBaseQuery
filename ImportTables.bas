@@ -9,10 +9,16 @@ Sub ImportTablesFromCsv()
 	' Считывание файлов из каталога
 	csvFiles = GetCsvFilesArray(sDirectory)
 	
-	' Импорт файлов в таблицы
-	For i = LBound(csvFiles) To UBound(csvFiles)
+    ' Проверка что массив не пуст
+    If UBound(csvFiles) < LBound(csvFiles) Then
+        MsgBox "Нет csv файлов в каталоге!", vbExclamation
+    Else
+        ' Импорт файлов в таблицы
+	    For i = LBound(csvFiles) To UBound(csvFiles)
             ImportCSVToTable(csvFiles(i))
-    Next i
+        Next i
+        MsgBox "Данные импортированы", vbExclamation
+    End If
 	
 End Sub
 
