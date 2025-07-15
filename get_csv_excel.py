@@ -6,17 +6,18 @@ ENCODING = 'utf-8'       # кодировка изначальная
 NEW_ENCODING = 'cp1251'  # кодировка в которую надо сохранить конечный файл
 
 def main():
-    # Конфигурация
+    
     # Получаем абсолютный путь к каталогу со скриптом
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
+    # Конфигурация
     inputFiles = os.path.join(script_dir, r"input")
     outFiles = os.path.join(script_dir, r"output")
 
-    schema_file = os.path.join(outFiles, r"access_meta.txt")                               # Файл с описанием структуры
+    schema_file = os.path.join(outFiles, r"access_meta.txt")                                        # Файл с описанием структуры
     
     excel_files = [
-        os.path.join(inputFiles, r"0503124 — копия.xls"),                                     # список excel-файлов
+        os.path.join(inputFiles, r"0503124 — копия.xls"),                                          # список excel-файлов
         os.path.join(inputFiles, r"0506604 — копия.xls"),
     ]
     sheet_names = [
